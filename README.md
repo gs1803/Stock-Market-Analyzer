@@ -10,4 +10,4 @@ The stock market analyze creates graphs and contains a list of all the tickers. 
 * pandas- v1.3.5
 * tabulate- v0.8.9
 * yfinance- v0.1.63
-* datetime- v3.2 (pre-installed)
+* datetime- Built in
