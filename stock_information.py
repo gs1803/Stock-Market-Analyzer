@@ -26,19 +26,19 @@ class StockInformation:
         headers_row = ['Date', 'Splits']
         print(tabulate(df_StockSpl.tail(), headers = headers_row, tablefmt = 'psql', showindex = False))
 
-    def div_spl_chooser(stock) -> None:
-        while True:
-            print("+------------------+")
-            print("|d: Dividends      |")
-            print("|s: Splits         |")
-            print("|q: Quit to Menu   |")
-            print("+------------------+")
-            divSplOption = input("Select an option: ")
-            if divSplOption == 'd':
-                StockInformation.stock_dividends(stock)
-            elif divSplOption == 's':
-                StockInformation.stock_splits(stock)
-            elif divSplOption == 'q':
-                break
-            else:
-                print("Enter a valid option.")
+def div_spl_chooser(stock) -> None:
+    while True:
+        print("+------------------+")
+        print("|d: Dividends      |")
+        print("|s: Splits         |")
+        print("|q: Quit to Menu   |")
+        print("+------------------+")
+        divSplOption = input("Select an option: ")
+        if divSplOption == 'd':
+            StockInformation.stock_dividends(stock)
+        elif divSplOption == 's':
+            StockInformation.stock_splits(stock)
+        elif divSplOption == 'q':
+            break
+        else:
+            print("Enter a valid option.")        
