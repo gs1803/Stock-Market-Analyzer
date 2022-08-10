@@ -2,7 +2,7 @@ from datetime import date
 import yfinance as yf
 from stock_analyzer import option_chooser
 from industry_sorter import IndustrySorter
-from stock_information import StockInformation
+from stock_information import StockInformation, div_spl_chooser
 
 def stock_info() -> None:
     start = str(input("Enter the start time in (yyyy-mm-dd) format: "))
