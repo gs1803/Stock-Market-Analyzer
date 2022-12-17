@@ -105,5 +105,3 @@ def visualize_data():
     heatmap.set_clim(-1, 1)
     plt.tight_layout()
     plt.show()
-
-visualize_data()
