@@ -1,7 +1,7 @@
 # STOCK MARKET ANALYZER
 ## Created by gs1803
-### Python Version: 3.10.4
-The stock market analyzer creates graphs and contains a list of all the tickers. There are several types of graphs relevant to stock market analysis and the list of tickers can be sorted by industry. The analyzer also shows dividends, splits, and analyst recommendations to buy/sell etc. 
+### Python Version: 3.10.8
+The stock market analyzer creates graphs and contains a list of all the tickers. There are several types of graphs relevant to stock market analysis and the list of tickers can be sorted by industry. The analyzer also shows dividends, splits, and analyst recommendations to buy/sell etc. It also creates a correlation table of the adj closes for the tickers in SP500.
 
 ### DEPENDENCIES
 (pip install)
