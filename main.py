@@ -3,6 +3,7 @@ import yfinance as yf
 from stock_analyzer import option_chooser
 from industry_sorter import IndustrySorter
 from stock_information import StockInformation, div_spl_chooser
+from standard_poor_corr import visualize_data
 
 def stock_info() -> None:
     start = str(input("Enter the start time in (yyyy-mm-dd) format: "))
@@ -31,6 +32,9 @@ def div_or_split() -> None:
     except ValueError:
         print("Enter a valid ticker.")
     
+def corr_table() -> None:
+    visualize_data()
+
 def main() -> None:
     while True:
         print("+-----------------------+")
@@ -38,9 +42,10 @@ def main() -> None:
         print("|t: View Tickers        |")
         print("|r: Recommendations     |")
         print("|i: Dividends and Splits|")
+        print("|c: Correlation Table   |")
         print("|q: Quit                |")
         print("+-----------------------+")
-        selectMainOpt = input("Select an option (g) (t) (r) (i) (q): ")
+        selectMainOpt = input("Select an option (g) (t) (r) (i) (c) (q): ")
         if selectMainOpt == 'g':
             stock_info()
         elif selectMainOpt == 't':
@@ -49,6 +54,8 @@ def main() -> None:
             analyst_recom()
         elif selectMainOpt == 'i':
             div_or_split()
+        elif selectMainOpt == 'c':
+            corr_table()
         elif selectMainOpt == 'q':
             break
         else:
