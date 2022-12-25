@@ -11,7 +11,7 @@ class StockInformation:
             headers_row = ['Date & Time', 'Firm', 'To Grade', 'Action']
             print(tabulate(analystRecom.tail(), headers = headers_row, tablefmt = 'psql'))
         except KeyError:
-            print("Ticker is invalid")
+            print(" ")
 
     def stock_dividends(stock) -> None:
         try:
@@ -22,7 +22,7 @@ class StockInformation:
             headers_row = ['Date', 'Dividends']
             print(tabulate(df_StockDiv.tail(), headers = headers_row, tablefmt = 'psql', showindex = False))
         except KeyError:
-            print("Ticker is invalid.")
+            print(" ")
 
     def stock_splits(stock) -> None:
         try:
@@ -33,7 +33,7 @@ class StockInformation:
             headers_row = ['Date', 'Splits']
             print(tabulate(df_StockSpl.tail(), headers = headers_row, tablefmt = 'psql', showindex = False))
         except KeyError:
-            print("Ticker is invalid.")
+            print(" ")
 
 def div_spl_chooser(stock) -> None:
     while True:
