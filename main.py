@@ -11,7 +11,10 @@ def stock_info() -> None:
     try:
         userStock = input("Enter the Stock Ticker: ").upper()
         inputStock = yf.download(f"{userStock}", start, end, progress = False)
-        option_chooser(inputStock, userStock)
+        if inputStock.empty:
+            pass
+        else:
+            option_chooser(inputStock, userStock)
     except ValueError:
         print("Enter a valid ticker.")
 
@@ -28,15 +31,19 @@ def analyst_recom() -> None:
 def div_or_split() -> None:
     try:
         userStock = input("Enter the Stock Ticker: ").upper()
-        StockInformation.div_spl_chooser(userStock)
+        div_spl_chooser(userStock)
     except ValueError:
         print("Enter a valid ticker.")
-    
+
 def corr_table() -> None:
     visualize_data()
 
+
 def main() -> None:
     while True:
+        print("")
+        print("+-----------------------+")
+        print("|       Main Menu       |")
         print("+-----------------------+")
         print("|g: View Graphs         |")
         print("|t: View Tickers        |")
