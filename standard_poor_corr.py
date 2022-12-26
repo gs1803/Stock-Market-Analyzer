@@ -8,9 +8,7 @@ import requests
 import matplotlib.pyplot as plt
 from matplotlib import style
 import numpy as np
-
 style.use('ggplot')
-
 
 def save_sp500_tickers():
     resp = requests.get('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
@@ -30,7 +28,6 @@ def save_sp500_tickers():
     
     return tickers
 #save_sp500_tickers()
-
 
 def get_data_from_yahoo(reload_sp500 = False):
     if reload_sp500:
@@ -52,7 +49,6 @@ def get_data_from_yahoo(reload_sp500 = False):
         else:
             print("Already have {}".format(ticker))
 #get_data_from_yahoo()
-
 
 def compile_data():
     with open("sp500tickers.pickle", "rb") as f:
@@ -79,11 +75,9 @@ def compile_data():
     #main_df.to_csv('sp500_joined_closes.csv')
 #compile_data()
 
-
 def visualize_data():
     df = pd.read_csv('sp500_joined_closes.csv')
     df_corr = df.corr(numeric_only = True)
-    #print(df_corr.head())
     
     data = df_corr.values
     fig = plt.figure()
