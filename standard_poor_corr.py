@@ -10,7 +10,7 @@ from matplotlib import style
 import numpy as np
 style.use('ggplot')
 
-def save_sp500_tickers():
+def save_sp500_tickers() -> list:
     resp = requests.get('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
     soup = bs.BeautifulSoup(resp.text, 'lxml')
     table = soup.find('table', {'class': 'wikitable sortable'})
@@ -29,7 +29,7 @@ def save_sp500_tickers():
     return tickers
 #save_sp500_tickers()
 
-def get_data_from_yahoo(reload_sp500 = False):
+def get_data_from_yahoo(reload_sp500 = False) -> None:
     if reload_sp500:
         tickers = save_sp500_tickers()
     else:
@@ -50,7 +50,7 @@ def get_data_from_yahoo(reload_sp500 = False):
             print("Already have {}".format(ticker))
 #get_data_from_yahoo()
 
-def compile_data():
+def compile_data() -> None:
     with open("sp500tickers.pickle", "rb") as f:
         tickers = pickle.load(f)
     
@@ -75,7 +75,7 @@ def compile_data():
     #main_df.to_csv('sp500_joined_closes.csv')
 #compile_data()
 
-def visualize_data():
+def visualize_data() -> None:
     df = pd.read_csv('sp500_joined_closes.csv')
     df_corr = df.corr(numeric_only = True)
     
