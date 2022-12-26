@@ -41,7 +41,6 @@ def div_or_split() -> None:
 def corr_table() -> None:
     visualize_data()
 
-
 def main() -> None:
     while True:
         print("")
