@@ -1,10 +1,9 @@
-import yfinance as yf
 import pandas as pd
 from tabulate import tabulate
 
 class StockInformation:
     def __init__(self, stock) -> None:
-        self.stock = yf.Ticker(stock)
+        self.stock = stock
 
     def stock_recommendations(self) -> None:
         try:
