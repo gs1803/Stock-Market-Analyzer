@@ -9,6 +9,7 @@ The stock market analyzer creates graphs and contains a list of all the tickers.
 * matplotlib.pyplot- v3.5.2
 * mplfinance.original_flavor- v0.12.7a17
 * pandas- v1.4.3
+* pandas-datareader- v0.10.0
 * tabulate- v0.8.10
 * yfinance- v0.1.73
 * datetime- Built in
