@@ -1,8 +1,8 @@
 from datetime import date
 import yfinance as yf
-from stock_analyzer import option_chooser
+from stock_analyzer import StockAnalyzer
 from industry_sorter import IndustrySorter
-from stock_information import StockInformation, div_spl_chooser
+from stock_information import StockInformation
 from standard_poor_corr import visualize_data
 
 def stock_info() -> None:
@@ -14,7 +14,8 @@ def stock_info() -> None:
         if inputStock.empty:
             pass
         else:
-            option_chooser(inputStock, userStock)
+            infoStock = StockAnalyzer(inputStock, userStock)
+            StockAnalyzer.option_chooser(infoStock)
     except ValueError:
         print("Enter a valid ticker.")
 
@@ -24,14 +25,16 @@ def industry_info() -> None:
 def analyst_recom() -> None:
     try:
         userStock = input("Enter the Stock Ticker: ").upper()
-        StockInformation.stock_recommendations(userStock)
+        recommStock = StockInformation(yf.Ticker(userStock))
+        StockInformation.stock_recommendations(recommStock)
     except ValueError:
         print("Enter a valid ticker.")
 
 def div_or_split() -> None:
     try:
         userStock = input("Enter the Stock Ticker: ").upper()
-        div_spl_chooser(userStock)
+        divSplitStock = StockInformation(yf.Ticker(userStock))
+        StockInformation.div_spl_chooser(divSplitStock)
     except ValueError:
         print("Enter a valid ticker.")
 
