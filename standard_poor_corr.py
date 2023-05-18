@@ -3,7 +3,6 @@ import datetime as dt
 import os
 import pandas as pd
 import pandas_datareader as web
-import pickle
 import requests
 import matplotlib.pyplot as plt
 from matplotlib import style
@@ -14,45 +13,41 @@ def save_sp500_tickers() -> list:
     resp = requests.get('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
     soup = bs.BeautifulSoup(resp.text, 'lxml')
     table = soup.find('table', {'class': 'wikitable sortable'})
+    
     tickers = []
     for row in table.findAll('tr')[1:]:
         ticker = row.findAll('td')[0].text
         ticker = ticker[:-1]
         if "." in ticker:
             ticker = ticker.replace('.', '-')
-            print('ticker replaced to', ticker) 
         tickers.append(ticker)
-    
-    with open("sp500tickers.pickle", "wb") as f:
-        pickle.dump(tickers, f)
     
     return tickers
 #save_sp500_tickers()
 
+
 def get_data_from_yahoo(reload_sp500 = False) -> None:
-    if reload_sp500:
-        tickers = save_sp500_tickers()
-    else:
-        with open("sp500tickers.pickle", "rb") as f:
-            tickers = pickle.load(f)
+    tickers = save_sp500_tickers()
 
     if not os.path.exists('stock_dfs'):
         os.makedirs('stock_dfs')
     
     start = dt.datetime(2015, 1, 1)
-    end = dt.datetime(2021, 8, 1)
+    end = dt.datetime(2022, 12, 1)
 
+    dfs = []
     for ticker in tickers:
-        if not os.path.exists('stock_dfs/{}.csv'.format(ticker)):
-            df = web.DataReader(ticker, 'yahoo', start, end)
-            df.to_csv('stock_dfs/{}.csv'.format(ticker))
-        else:
-            print("Already have {}".format(ticker))
-#get_data_from_yahoo()
+        df = web.DataReader(ticker, 'yahoo', start, end)
+        dfs.append(df)
+
+    main_df = pd.concat(dfs, axis=1)
+    main_df.columns = tickers
+
+    return main_df
+
 
 def compile_data() -> None:
-    with open("sp500tickers.pickle", "rb") as f:
-        tickers = pickle.load(f)
+    tickers = save_sp500_tickers()
     
     main_df = pd.DataFrame()
 
@@ -75,10 +70,11 @@ def compile_data() -> None:
     #main_df.to_csv('sp500_joined_closes.csv')
 #compile_data()
 
+
 def visualize_data() -> None:
     df = pd.read_csv('sp500_joined_closes.csv')
     df_corr = df.corr(numeric_only = True)
-    
+
     data = df_corr.values
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
