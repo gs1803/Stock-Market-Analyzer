@@ -22,11 +22,11 @@ def stock_info() -> None:
 def industry_info() -> None:
     IndustrySorter.stock_details()
 
-def analyst_recom() -> None:
+def holder_info() -> None:
     try:
         userStock = input("Enter the Stock Ticker: ").upper()
-        recommStock = StockInformation(yf.Ticker(userStock))
-        StockInformation.stock_recommendations(recommStock)
+        holderStock = StockInformation(yf.Ticker(userStock))
+        StockInformation.holder_chooser(holderStock)
     except ValueError:
         print("Enter a valid ticker.")
 
@@ -49,18 +49,18 @@ def main() -> None:
         print("+-----------------------+")
         print("|g: View Graphs         |")
         print("|t: View Tickers        |")
-        print("|r: Recommendations     |")
+        print("|h: Holders Info        |")
         print("|i: Dividends and Splits|")
         print("|c: Correlation Table   |")
         print("|q: Quit                |")
         print("+-----------------------+")
-        selectMainOpt = input("Select an option (g) (t) (r) (i) (c) (q): ")
+        selectMainOpt = input("Select an option (g) (t) (h) (c) (q): ")
         if selectMainOpt == 'g':
             stock_info()
         elif selectMainOpt == 't':
             industry_info()
-        elif selectMainOpt == 'r':
-            analyst_recom()
+        elif selectMainOpt == 'h':
+            holder_info()
         elif selectMainOpt == 'i':
             div_or_split()
         elif selectMainOpt == 'c':
