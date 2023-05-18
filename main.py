@@ -54,7 +54,7 @@ def main() -> None:
         print("|c: Correlation Table   |")
         print("|q: Quit                |")
         print("+-----------------------+")
-        selectMainOpt = input("Select an option (g) (t) (h) (c) (q): ")
+        selectMainOpt = input("Select an option (g) (t) (h) (i) (c) (q): ")
         if selectMainOpt == 'g':
             stock_info()
         elif selectMainOpt == 't':
