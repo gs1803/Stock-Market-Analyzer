@@ -5,12 +5,30 @@ class StockInformation:
     def __init__(self, stock) -> None:
         self.stock = stock
 
-    def stock_recommendations(self) -> None:
+    def stock_major_holders(self) -> None:
         try:
-            analystRecom = self.stock.recommendations
-            del analystRecom["From Grade"]
-            headers_row = ['Date & Time', 'Firm', 'To Grade', 'Action']
-            print(tabulate(analystRecom.tail(), headers = headers_row, tablefmt = 'psql'))
+            majorHolders = self.stock.major_holders
+            headers_row = ['Percentage', 'Information']
+            majorHolders = majorHolders.reset_index(drop = True)
+            print(tabulate(majorHolders.values, headers = headers_row, tablefmt = 'psql'))
+        except KeyError:
+            print(" ")
+
+    def stock_institutional_holders(self) -> None:
+        try:
+            institutionalHolders = self.stock.institutional_holders
+            headers_row = ['Holder', 'Shares', 'Date Reported', '% Out', 'Value']
+            institutionalHolders = institutionalHolders.reset_index(drop = True)
+            print(tabulate(institutionalHolders.values, headers = headers_row, tablefmt = 'psql'))
+        except KeyError:
+            print(" ")
+
+    def stock_mutualfund_holders(self) -> None:
+        try:
+            mutualfundHolders = self.stock.mutualfund_holders
+            headers_row = ['Holder', 'Shares', 'Date Reported', '% Out', 'Value']
+            mutualfundHolders = mutualfundHolders.reset_index(drop = True)
+            print(tabulate(mutualfundHolders.values, headers = headers_row, tablefmt = 'psql'))
         except KeyError:
             print(" ")
 
@@ -48,6 +66,27 @@ class StockInformation:
             elif divSplOption == 's':
                 StockInformation.stock_splits(self)
             elif divSplOption == 'q':
+                break
+            else:
+                print("Enter a valid option.")
+
+    def holder_chooser(self) -> None:
+        while True:
+            print("+--------------------------+")
+            print("|m: Major Holders          |")
+            print("|i: Institutional Holders  |")
+            print("|f: Mutual Fund Holders    |")
+            print("|q: Quit to Menu           |")
+            print("+--------------------------+")
+            holderOption = input("Select an option: ")
+
+            if holderOption == 'm':
+                StockInformation.stock_major_holders(self)
+            elif holderOption == 'i':
+                StockInformation.stock_institutional_holders(self)
+            elif holderOption == 'f':
+                StockInformation.stock_mutualfund_holders(self)
+            elif holderOption == 'q':
                 break
             else:
                 print("Enter a valid option.")
