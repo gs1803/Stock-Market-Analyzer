@@ -1,6 +1,5 @@
 import bs4 as bs
 import datetime as dt
-import os
 import pandas as pd
 import pandas_datareader as web
 import requests
@@ -23,14 +22,9 @@ def save_sp500_tickers() -> list:
         tickers.append(ticker)
     
     return tickers
-#save_sp500_tickers()
-
 
 def get_data_from_yahoo(reload_sp500 = False) -> None:
     tickers = save_sp500_tickers()
-
-    if not os.path.exists('stock_dfs'):
-        os.makedirs('stock_dfs')
     
     start = dt.datetime(2015, 1, 1)
     end = dt.datetime(2022, 12, 1)
@@ -44,7 +38,6 @@ def get_data_from_yahoo(reload_sp500 = False) -> None:
     main_df.columns = tickers
 
     return main_df
-
 
 def compile_data() -> None:
     tickers = save_sp500_tickers()
@@ -66,10 +59,7 @@ def compile_data() -> None:
         if count % 10 == 0:
             print(count)
 
-    #print(main_df.head())
-    #main_df.to_csv('sp500_joined_closes.csv')
-#compile_data()
-
+    main_df.to_csv('sp500_joined_closes.csv')
 
 def visualize_data() -> None:
     df = pd.read_csv('sp500_joined_closes.csv')
