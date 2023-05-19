@@ -27,7 +27,7 @@ def get_data_from_yahoo() -> None:
     tickers = save_sp500_tickers()
 
     start = dt.datetime(2015, 1, 1)
-    end = dt.datetime(2022, 12, 1)
+    end = dt.datetime(2022, 12, 31)
 
     dfs = []
     for ticker in tickers:
