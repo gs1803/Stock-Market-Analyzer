@@ -1,18 +1,18 @@
 import bs4 as bs
 import datetime as dt
 import pandas as pd
-import pandas_datareader as web
 import requests
 import matplotlib.pyplot as plt
 from matplotlib import style
 import numpy as np
+import yfinance as yf
 style.use('ggplot')
 
 def save_sp500_tickers() -> list:
     resp = requests.get('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
     soup = bs.BeautifulSoup(resp.text, 'lxml')
     table = soup.find('table', {'class': 'wikitable sortable'})
-    
+
     tickers = []
     for row in table.findAll('tr')[1:]:
         ticker = row.findAll('td')[0].text
@@ -20,45 +20,23 @@ def save_sp500_tickers() -> list:
         if "." in ticker:
             ticker = ticker.replace('.', '-')
         tickers.append(ticker)
-    
+
     return tickers
 
-def get_data_from_yahoo(reload_sp500 = False) -> None:
+def get_data_from_yahoo() -> None:
     tickers = save_sp500_tickers()
-    
+
     start = dt.datetime(2015, 1, 1)
     end = dt.datetime(2022, 12, 1)
 
     dfs = []
     for ticker in tickers:
-        df = web.DataReader(ticker, 'yahoo', start, end)
+        df = yf.download(ticker, start, end, progress = False)
+        df.rename(columns = {'Adj Close': ticker}, inplace = True)
+        df.drop(columns = ['Open' ,'High', 'Low', 'Close', 'Volume'], axis = 1, inplace = True)
         dfs.append(df)
 
-    main_df = pd.concat(dfs, axis=1)
-    main_df.columns = tickers
-
-    return main_df
-
-def compile_data() -> None:
-    tickers = save_sp500_tickers()
-    
-    main_df = pd.DataFrame()
-
-    for count, ticker in enumerate(tickers):
-        df = pd.read_csv('stock_dfs/{}.csv'.format(ticker))
-        df.set_index('Date', inplace = True)
-
-        df.rename(columns = {'Adj Close': ticker}, inplace = True)
-        df.drop(['Open' ,'High', 'Low', 'Close', 'Volume'], 1, inplace = True)
-
-        if main_df.empty:
-            main_df = df
-        else:
-            main_df = main_df.join(df, how = 'outer')
-
-        if count % 10 == 0:
-            print(count)
-
+    main_df = pd.concat(dfs, axis = 1)
     main_df.to_csv('sp500_joined_closes.csv')
 
 def visualize_data() -> None:
