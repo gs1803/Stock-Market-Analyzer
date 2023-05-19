@@ -27,7 +27,7 @@ class IndustrySorter:
                 print(tabulate(df_alpha_list, showindex = False,tablefmt = 'psql'))
                 break
 
-    def stock_details():
+    def stock_details() -> None:
         names = ['Company Name', 'Ticker', 'Industry']
         data = pd.read_csv("stock_details.csv", encoding = 'utf=8', header = 0, index_col = 1)
         df = pd.DataFrame(data)
