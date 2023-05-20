@@ -9,7 +9,7 @@ class StockAnalyzer:
     def __init__(self, stock, titleStock) -> None:
         self.stock = stock
         self.titleStock = titleStock
-        self.companyStock = yf.Ticker(titleStock).info['shortName']
+        self.companyStock = yf.Ticker(titleStock).info['longName']
         
     def stock_prices(self) -> None:
         self.stock['Open'].plot(figsize = (15, 7))
