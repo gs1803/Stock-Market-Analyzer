@@ -9,22 +9,22 @@ class StockAnalyzer:
     def __init__(self, stock, titleStock) -> None:
         self.stock = stock
         self.titleStock = titleStock
-        self.companyStock = yf.Ticker(titleStock)
+        self.companyStock = yf.Ticker(titleStock).info['shortName']
         
     def stock_prices(self) -> None:
         self.stock['Open'].plot(figsize = (15, 7))
-        plt.title(f"Stock Prices for {self.titleStock} ({self.companyStock.info['shortName']})")
+        plt.title(f"Stock Prices for {self.titleStock} ({self.companyStock})")
         plt.show()
 
     def stock_volume(self) -> None:
         self.stock['Volume'].plot(figsize = (15, 7))
-        plt.title(f"Volume of Stock Traded of {self.titleStock} ({self.companyStock.info['shortName']})")
+        plt.title(f"Volume of Stock Traded of {self.titleStock} ({self.companyStock})")
         plt.show()
 
     def stock_market_cap(self) -> None:
         self.stock['MktCap'] = self.stock['Open'] * self.stock['Volume']
         self.stock['MktCap'].plot(figsize = (15, 7))
-        plt.title(f"Market Cap for {self.titleStock} ({self.companyStock.info['shortName']})")
+        plt.title(f"Market Cap for {self.titleStock} ({self.companyStock})")
         plt.show()
 
     def stock_moving_average(self) -> None:
@@ -35,13 +35,13 @@ class StockAnalyzer:
         self.stock['MA50'].plot(label = '50 Days')
         self.stock['MA200'].plot(label = '200 Days')
         plt.legend()
-        plt.title(f"Moving Average for {self.titleStock} ({self.companyStock.info['shortName']})")
+        plt.title(f"Moving Average for {self.titleStock} ({self.companyStock})")
         plt.show()
     
     def stock_volatility(self) -> None:
         self.stock['returns'] = (self.stock['Close'] / self.stock['Close'].shift(1)) -1
         self.stock['returns'].hist(bins = 100, alpha = 0.5, figsize = (15, 7))
-        plt.title(f"Volatility of {self.titleStock} ({self.companyStock.info['shortName']})")
+        plt.title(f"Volatility of {self.titleStock} ({self.companyStock})")
         plt.show()
 
     def stock_candlestick_graph(self) -> None:
@@ -59,7 +59,7 @@ class StockAnalyzer:
         candlestick_ohlc(ax1, dS_ohlc.values, width = 6, colorup = 'g')
         ax2.fill_between(dS_volume.index.map(mdates.date2num), dS_volume.values, 0)
 
-        plt.title(f"Candlestick Graph for {self.titleStock} ({self.companyStock.info['shortName']})")
+        plt.title(f"Candlestick Graph for {self.titleStock} ({self.companyStock})")
         plt.tight_layout()
         plt.show()
 
