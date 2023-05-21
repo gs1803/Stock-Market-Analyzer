@@ -75,7 +75,6 @@ class StockAnalyzer:
         print('+---------------------+')
         while True: 
             userDesicion = input("Select an option (1) (2) (3) (4) (5) (6) (q): ")
-
             if userDesicion == '1':
                 StockAnalyzer.stock_prices(self)
             elif userDesicion == '2':
